@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Gallery</title>
+</head>
+<body>
+<h1>Photo Gallery</h1>
+<form action="/photos/upload" method="post" enctype="multipart/form-data">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    <label for="file">Upload Photo:</label>
+    <input type="file" id="file" name="file" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Photo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="photo : ${photos}">
+        <td th:text="${photo.title}"></td>
+        <td>
+            <img th:src="@{/photos/{id}(id=${photo.id})}" alt="Photo" width="100">
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:if="${currentPage > 0}" th:href="@{/photos(page=${currentPage - 1})}">Previous</a>
+    <span th:text="${currentPage + 1}"></span>
+    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/photos(page=${currentPage + 1})}">Next</a>
+</div>
+
+</body>
+</html>
